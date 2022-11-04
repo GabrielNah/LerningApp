@@ -1,0 +1,30 @@
+.login_page{
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../Images/cool-background.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.input{
+  border-radius: 11px 11px 11px 11px;
+  caret-color: blue;
+  padding: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  box-shadow: 13px 15px 22px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 13px 15px 22px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 13px 15px 22px 0px rgba(0,0,0,0.75);
+  border: none;
+  outline: none;
+  text-indent: 4px;
+}
+.actions{
+
+}
+.form-control{
+  background-color: cadetblue;
+}
+h6{
+  color: #e2e8f0;
+}
