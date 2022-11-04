@@ -17,7 +17,7 @@ backend/composer.lock
 backend/package-lock.json
 backend/*.log
 
-frontend
+frontend/package-lock.json
 /.fleet
 /.idea
 /.vscode
