@@ -1,17 +1,8 @@
 import {createStore} from "vuex";
+import AuthModule from "./Modules/AuthModule";
 const store = createStore({
-    state () {
-        return {
-            count: 111
-        }
-    },
-    getters:{
-      getCount:(state)=>state.count
-    },
-    mutations: {
-        increment (state) {
-            state.count++
-        }
+    modules:{
+        AuthModule
     }
 })
 export default store
