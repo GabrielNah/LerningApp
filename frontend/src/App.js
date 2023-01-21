@@ -6,22 +6,31 @@ import Profile from "./components/Profile";
 import Dashboard from "./components/Dashboard";
 import MainLayout from "./Layots/MainLayout";
 import HomeComponent from "./components/HomeComponent";
+import DashboardLayout from "./Layots/DashboardLayout";
+import {AuthProvider} from "./Contexts/Auth/AuthContext";
+import AuthGuard from "./Services/AuthGuard";
 
 function App() {
   return (
+    <AuthProvider>
     <div className="App">
-      <Routes>
-        <Route path="/" element={<MainLayout/>}>
-          <Route index element={<HomeComponent/>} />
-          <Route path='/login' element={<LoginComponent/>}/>
-          <Route path='/register' element={<RegisterComponent/>}/>
-          <Route path='/forgot' element={<ForgotPassword/>}/>
-          <Route path='/profile' element={<Profile/>}/>
-          <Route path='/dashboard' element={<Dashboard/>}/>
+        <Routes>
+          <Route path="/" element={<MainLayout/>}>
+            <Route index element={<HomeComponent/>} />
+            <Route path='/login' element={<LoginComponent/>}/>
+            <Route path='/register' element={<RegisterComponent/>}/>
+            <Route path='/forgot' element={<ForgotPassword/>}/>
+            <Route path='' element={<AuthGuard/>}>
+              <Route path='' element={<DashboardLayout/>}>
+                <Route path='profile' element={<Profile/>}/>
+                <Route path='dashboard' element={<Dashboard/>}/>
+              </Route>
+            </Route>
 
-        </Route>
-      </Routes>
-    </div>
+          </Route>
+        </Routes>
+      </div>
+    </AuthProvider>
   );
 }
 

@@ -1,0 +1,10 @@
+<?php
+
+namespace App\API\Controllers;
+
+use App\API\ApiController;
+
+class %s  extends ApiController
+{
+
+}

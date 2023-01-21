@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.css'
 import {BrowserRouter} from "react-router-dom";
 import './index.css';
+import './styles/sidebar.css'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
