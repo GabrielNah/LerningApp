@@ -1,26 +1,30 @@
 import {getAuthToken} from "./AuthTokenService";
 import {useAuthContext} from "../Contexts/Auth/AuthContext";
-import {Navigate} from "react-router-dom";
+import {Navigate,Outlet} from "react-router-dom";
 import {useEffect, useState} from "react";
+import Loader from "../components/Loader";
 
-const AuthGuard = ({children}) => {
-    let [isAutheticated,setIsAutheticated]=useState(true);
+const AuthGuard = () => {
+    let [isAutheticated,setIsAutheticated]=useState(false);
+    let [loaded,setLoaded]=useState(false);
     let {fetchUser}=useAuthContext();
-    const checkAuthentication=async ()=>{
-        if (getAuthToken()){
-            if (await fetchUser()){
-                setIsAutheticated(true)
-            }else{
-                setIsAutheticated(false)
+
+    useEffect(  ()=>{
+        const checkAuthentication=async ()=>{
+            if (getAuthToken()){
+                if (await fetchUser()){
+                    setIsAutheticated(true)
+                }else{
+                    setIsAutheticated(false)
+                }
             }
+            setLoaded(true)
         }
+        checkAuthentication()
+    },[isAutheticated])
+    if (!loaded){
+       return <Loader/>
     }
-    useEffect( ()=>{
-        // checkAuthentication()
-    })
-    if (isAutheticated){
-        return children;
-    }
-    return (<Navigate to="/login"/>);
+    return isAutheticated? <Outlet/>: <Navigate to='login'/>
 }
 export default AuthGuard

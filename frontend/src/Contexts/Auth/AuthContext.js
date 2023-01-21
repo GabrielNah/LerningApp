@@ -45,7 +45,8 @@ export const AuthProvider=({children})=>{
 
     const fetchUser=async ()=>{
         try{
-            let {user}=await FetchAuthUser()
+            let {user}=await FetchAuthUser();
+            console.log(user);
             setUser(user)
             return true
         }catch (e) {
