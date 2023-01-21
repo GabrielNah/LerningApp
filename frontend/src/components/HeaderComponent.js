@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {NavLink, useLocation} from "react-router-dom";
+import {useAuthContext} from "../Contexts/Auth/AuthContext";
 
 const HeaderComponent = () => {
     const location = useLocation();
@@ -11,7 +12,6 @@ const HeaderComponent = () => {
         }
         setIsLoginPage(false)
     }, [location]);
-
     return (
         <>
           <header className="d-flex flex-row align-items-center container-xl">

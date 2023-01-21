@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\API\Controllers\Auth;
 
 use App\API\ApiController;
-use App\Http\Requests\LoginRequest;
-use App\Models\Admin;
-use App\Models\Permissions;
+use App\API\Requests\LoginRequest;
+use App\API\Requests\RegisterRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -13,10 +13,23 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends ApiController
 {
+    public function register(RegisterRequest $request)
+    {
+        $user=User::create([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'password'=>bcrypt($request->password)
+            ]);
+        $token=$user->createToken('token-name')->plainTextToken;
+        return $this->createdResponse([
+            'user'=>$user,
+            'token'=>$token
+        ]);
+    }
+
     public function login(LoginRequest $request)
     {
-        try {
-            $user = Admin::where('email', $request->email)->first();
+            $user = User::where('email', $request->email)->first();
 
             if (! $user || ! Hash::check($request->password, $user->password)) {
                 throw ValidationException::withMessages([
@@ -24,15 +37,9 @@ class AuthController extends ApiController
                 ]);
             }
             $user->tokens()->delete();
-            $abilities=Permissions::query()->pluck('name')->all();
-            $token=$user->createToken('token-name',$abilities)->plainTextToken;
-            return $this->successResponse(compact('token','abilities'),Response::HTTP_OK);
-        }catch (\Throwable $e){
-            throw new \Exception($e->getMessage());
-        }
-
+            $token=$user->createToken('token-name')->plainTextToken;
+            return $this->successResponse(compact('token','user'),Response::HTTP_OK);
     }
-
 
     public function logout()
     {
@@ -40,7 +47,7 @@ class AuthController extends ApiController
             auth()->user()->tokens()->delete();
             return $this->successResponse([]);
         }catch (\Throwable $e){
-            throw new \Exception($e->getMessage());
+            return $this->errorResponse();
         }
     }
 

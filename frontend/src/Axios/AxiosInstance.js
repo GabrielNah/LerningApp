@@ -23,7 +23,7 @@ const onRequest = (config) => {
 // A function that calls '/api/csrf-cookie' to set the CSRF cookies. The
 // default is 'sanctum/csrf-cookie' but you can configure it to be anything.
 const setCSRFToken = () => {
-    return axios.get('/sanctum/csrf-cookie');
+    return axios.get('http://localhost:8000/sanctum/csrf-cookie');
 }
 
 ApiRequest.interceptors.response.use(function (response) {
