@@ -7,6 +7,7 @@ use App\Http\Requests\LoginRequest;
 use App\Models\Admin;
 use App\Models\Permissions;
 use http\Exception\RuntimeException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,5 +43,18 @@ class AuthController extends ApiController
         }catch (\Throwable $e){
             throw new RuntimeException($e->getMessage());
         }
+    }
+
+    public function user(Request $request)
+    {
+        try {
+            if ($request->user()){
+                return $this->successResponse(['user'=>$request->user()]);
+            }
+
+        }catch (\Throwable $e){
+            return $this->errorResponse([]);
+        }
+
     }
 }
