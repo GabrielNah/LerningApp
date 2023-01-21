@@ -13,9 +13,12 @@
     },
     "dependencies": {
         "@vitejs/plugin-vue": "^3.2.0",
+        "bootstrap": "^5.2.3",
+        "bootstrap-vue": "^2.23.1",
         "vue": "^3.2.36",
         "vue-loader": "^17.0.1",
         "vue-router": "^4.1.6",
+        "vue3-cookies": "^1.0.6",
         "vuex": "^4.1.0"
     }
 }
