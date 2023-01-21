@@ -20,8 +20,8 @@ function App() {
             <Route path='/login' element={<LoginComponent/>}/>
             <Route path='/register' element={<RegisterComponent/>}/>
             <Route path='/forgot' element={<ForgotPassword/>}/>
-            <Route path='' element={<AuthGuard/>}>
-              <Route path='' element={<DashboardLayout/>}>
+            <Route  element={<AuthGuard/>}>
+              <Route  element={<DashboardLayout/>}>
                 <Route path='profile' element={<Profile/>}/>
                 <Route path='dashboard' element={<Dashboard/>}/>
               </Route>
