@@ -55,6 +55,25 @@ export default {
             }catch (e){
                 return e;
             }
+        },
+        async fetchAuthUser(ctx){
+            try {
+                let {data:{user}}=await httpWithBearer().post('/me')
+                if (user?.id && user?.name==='Admin'){
+                    ctx.commit('setUser',user)
+                    ctx.commit('setIsAuthenticated',true)
+                    return true;
+                }
+                clearAuthToken();
+                ctx.commit('setUser',null)
+                ctx.commit('setIsAuthenticated',false)
+                return false;
+            }catch (e) {
+                clearAuthToken();
+                ctx.commit('setUser',null)
+                ctx.commit('setIsAuthenticated',false)
+                return false;
+            }
         }
     }
 }

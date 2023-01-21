@@ -3,6 +3,7 @@ import LoginComponent from "../AdminTemplate/Auth/LoginComponent.vue";
 import {DASHBOARD_ROUTE, LOGIN_ROUTE} from "./routeNames";
 import DashboardLayout from "../AdminTemplate/Layout/DashboardLayout.vue";
 import Dashboard from "../AdminTemplate/Dashboard/Dashboard.vue";
+import AuthGuard from "./AuthGuard";
 // setup routes
 const router = createRouter({
     history: createWebHistory(),
@@ -34,4 +35,5 @@ const router = createRouter({
 
     ]
 })
+AuthGuard(router)
 export default router

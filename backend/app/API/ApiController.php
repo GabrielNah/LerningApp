@@ -13,10 +13,10 @@ abstract class ApiController
            'success'=>true],...$data], $statusCode??ResponseAlias::HTTP_OK);
     }
 
-    public function errorResponse(array $data,int $statusCode):JsonResponse
+    public function errorResponse(array $data,int $statusCode=null):JsonResponse
     {
         return response()->json([...[
-            'success'=>false],...$data],$statusCode);
+            'success'=>false],...$data],$statusCode??ResponseAlias::HTTP_BAD_REQUEST);
     }
 
     public function createdResponse(array $data):JsonResponse

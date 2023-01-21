@@ -13,4 +13,7 @@ class Admin extends Model
     const TABLE='admins';
     protected $guarded=[];
     protected $table=self::TABLE;
+    protected $hidden = [
+        'password',
+    ];
 }
