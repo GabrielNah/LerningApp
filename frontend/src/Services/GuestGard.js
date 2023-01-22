@@ -4,7 +4,7 @@ import {Navigate,Outlet} from "react-router-dom";
 import {useEffect, useState} from "react";
 import Loader from "../components/Loader";
 
-const AuthGuard = () => {
+const GuestGuard = () => {
     let [isAutheticated,setIsAutheticated]=useState(false);
     let [loaded,setLoaded]=useState(false);
     let {fetchUser}=useAuthContext();
@@ -23,8 +23,8 @@ const AuthGuard = () => {
         checkAuthentication()
     },[])
     if (!loaded){
-       return <Loader/>
+        return <Loader/>
     }
-    return isAutheticated? <Outlet/>: <Navigate to='login'/>
+    return !isAutheticated? <Outlet/>: <Navigate to='profile'/>
 }
-export default AuthGuard
+export default GuestGuard

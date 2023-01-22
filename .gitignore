@@ -16,7 +16,7 @@ backend/yarn-error.log
 backend/composer.lock
 backend/package-lock.json
 backend/*.log
-
+frontend/public/assets
 frontend/package-lock.json
 /.fleet
 /.idea
