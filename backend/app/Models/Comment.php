@@ -4,18 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Post extends Model
+class Comment extends Model
 {
     use HasFactory;
-
-    const TABLE='posts';
+    const TABLE='comments';
     protected $table=self::TABLE;
     protected $guarded=[];
 
-    public function comments():HasMany
+    public function writer():BelongsTo
     {
-        return  $this->hasMany(Comment::class,'post_id','id');
+        return $this->belongsTo(User::class,'user_id','id');
     }
+
 }
