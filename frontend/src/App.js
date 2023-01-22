@@ -1,5 +1,5 @@
 import LoginComponent from "./components/LoginComponent";
-import {Routes,Route,Link} from "react-router-dom";
+import {Routes,Route} from "react-router-dom";
 import RegisterComponent from "./components/RegisterComponent";
 import ForgotPassword from "./components/ForgotPassword";
 import Profile from "./components/Profile";
@@ -9,24 +9,29 @@ import HomeComponent from "./components/HomeComponent";
 import DashboardLayout from "./Layots/DashboardLayout";
 import {AuthProvider} from "./Contexts/Auth/AuthContext";
 import AuthGuard from "./Services/AuthGuard";
+import GuestGard from "./Services/GuestGard";
+import PostCreator from "./components/PostCreator";
 
 function App() {
   return (
     <AuthProvider>
     <div className="App">
         <Routes>
+
           <Route path="/" element={<MainLayout/>}>
-            <Route index element={<HomeComponent/>} />
-            <Route path='/login' element={<LoginComponent/>}/>
-            <Route path='/register' element={<RegisterComponent/>}/>
-            <Route path='/forgot' element={<ForgotPassword/>}/>
+            <Route element={<GuestGard/>}>
+              <Route path='' element={<HomeComponent/>} />
+              <Route path='/login' element={<LoginComponent/>}/>
+              <Route path='/register' element={<RegisterComponent/>}/>
+              <Route path='/forgot' element={<ForgotPassword/>}/>
+            </Route>
             <Route  element={<AuthGuard/>}>
               <Route  element={<DashboardLayout/>}>
                 <Route path='profile' element={<Profile/>}/>
                 <Route path='dashboard' element={<Dashboard/>}/>
+                <Route path='posts' element={<PostCreator/>}/>
               </Route>
             </Route>
-
           </Route>
         </Routes>
       </div>

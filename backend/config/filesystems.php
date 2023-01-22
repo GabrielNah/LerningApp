@@ -43,6 +43,10 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        'customers'=>[
+            'driver' => 'local',
+            'root' => base_path('../frontend/public/assets'),
+        ],
 
         's3' => [
             'driver' => 's3',
