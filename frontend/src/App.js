@@ -11,6 +11,7 @@ import {AuthProvider} from "./Contexts/Auth/AuthContext";
 import AuthGuard from "./Services/AuthGuard";
 import GuestGard from "./Services/GuestGard";
 import PostCreator from "./components/PostCreator";
+import SinglePost from "./components/SinglePost";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
                 <Route path='profile' element={<Profile/>}/>
                 <Route path='dashboard' element={<Dashboard/>}/>
                 <Route path='posts' element={<PostCreator/>}/>
+                <Route path='posts/:id' element={<SinglePost/>}/>
               </Route>
             </Route>
           </Route>
