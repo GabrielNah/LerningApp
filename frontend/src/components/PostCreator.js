@@ -78,8 +78,6 @@ const PostCreator = () => {
         titleArea.current.value=''
     }
     const AlertStyles = () => {
-        console.log(errors)
-        console.log(success)
         return `alert text-bold text-center ${ errors?'alert-danger':(success?'alert-success':'')}`
     }
 

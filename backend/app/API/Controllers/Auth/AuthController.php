@@ -63,4 +63,9 @@ class AuthController extends ApiController
         }
 
     }
+
+    public function additional()
+    {
+        return $this->successResponse(['additional'=>auth()->user()->additional]);
+    }
 }

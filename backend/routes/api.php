@@ -25,9 +25,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function (){
     Route::post('/logout',[App\API\Controllers\Auth\AuthController::class,'logout']);
     Route::post('/me',[App\API\Controllers\Auth\AuthController::class,'user']);
+    Route::get('/additional',[App\API\Controllers\Auth\AuthController::class,'additional']);
+
+    Route::group(['prefix'=>'user'],function (){
+       Route::put('/profile',[\App\API\Controllers\UserController::class,'applyForChanges']);
+    });
 
     Route::group(['prefix'=>'post'],function (){
        Route::get('',[\App\API\Controllers\PostController::class,'index']);
        Route::post('/post',[\App\API\Controllers\PostController::class,'store']);
+       Route::get('/{id}',[\App\API\Controllers\PostController::class,'getPost']);
+       Route::post('/{id}/comment',[\App\API\Controllers\PostController::class,'comment']);
     });
 });
