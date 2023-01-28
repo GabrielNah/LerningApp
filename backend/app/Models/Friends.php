@@ -5,13 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserAdditional extends Model
+class Friends extends Model
 {
     use HasFactory;
-    const TABLE='users_additional';
+    const TABLE='friends';
     protected $table=self::TABLE;
-    const FB_LINK='fb';
-    const IG_LINK='ig';
-    const TW_LINK='tw';
     protected $guarded=[];
 }

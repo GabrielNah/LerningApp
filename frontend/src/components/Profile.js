@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {memo, useEffect, useRef, useState} from 'react';
 import {useAuthContext} from "../Contexts/Auth/AuthContext";
 import Loader from "./Loader";
 import httpService from "../Axios/HttpService";
@@ -22,7 +22,7 @@ const Profile = () => {
     const image=useRef(null);
     const fetchAdditional = async () => {
         try{
-            let {data:{additional}}=await httpService().get('/additional')
+            let {data:{additional}}=await httpService().get('/user/additional')
             setAdditional(additional)
         }catch (e){
             console.log(e)
@@ -30,13 +30,27 @@ const Profile = () => {
     }
 
     const applyChanges = () => {
+        if (!(fbLink || IGLink || twLink || image.current?.files?.length || name)){
+            return;
+        }
       const data=new FormData
-      data.append('fb',fbLink)
-      data.append('tw',twLink)
-      data.append('ig',IGLink)
-      data.append('name',name)
-      data.append('avatar',image.current.files.length?image.current.files[0]:null)
-      httpService().put('user/profile',data)
+        if (fbLink){
+            data.append('fb',fbLink)
+        }
+        if (twLink){
+            data.append('tw',twLink)
+        }
+        if (IGLink){
+            data.append('ig',IGLink)
+        }
+        if (name){
+            data.append('name',name)
+        }
+        if (image.current.files[0]){
+            data.append('avatar',image.current.files[0])
+        }
+            data.append('_method','PUT')
+      httpService().post('user/profile',data)
           .then(r=>{
               console.log(r)
               setSuccess('data changes successfully')
@@ -60,10 +74,9 @@ const Profile = () => {
             fetchAdditional()
                 .then(_=>setLoaded(true))
         }
-    },[user])
+    },[])
     useEffect(()=>{
         setTimeout(()=>{
-            console.log('ruend')
             setSuccess('')
             setError('')
         },3000)
@@ -83,7 +96,7 @@ const Profile = () => {
                                 <div className="row g-0">
                                     <div className="col-md-4 gradient-custom text-center bg-dark text-white">
                                         <img style={imageStyles}
-                                            src={preview? preview: additional?.avatar}
+                                            src={preview? preview: 'assets/'+additional?.avatar}
                                             alt="Avatar" className="img-fluid my-5" />
                                         <div>
                                             <label className={'w-100'}>
@@ -92,7 +105,7 @@ const Profile = () => {
                                         </div>
                                         <h5 className={'mt-4'}>
                                             <input type="text" className={'input w-100'}
-                                                   onInput={e=>setName(e.target.value)} defaultValue={user.name}/>
+                                                   onInput={e=>setName(e.target.value)} defaultValue={user.name??''}/>
                                         </h5>
                                     </div>
                                     <div className="col-md-8">
@@ -103,7 +116,7 @@ const Profile = () => {
                                                     <div className="col-6 mb-3">
                                                         <h6 className={'text-dark'}>Email</h6>
                                                         <p className="text-muted">
-                                                            <input type="text" defaultValue={user.email} disabled className={'input'}/>
+                                                            <input type="text" defaultValue={user.email??''} disabled className={'input'}/>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -113,7 +126,7 @@ const Profile = () => {
                                                             <span>
                                                                 Instagram
                                                             </span>
-                                                            <input type="text" defaultValue={additional?.it}
+                                                            <input type="text" defaultValue={additional?.ig??''}
                                                                    onInput={e=>setIGLink(e.target.value)} className={'input'}/>
                                                         </label>
                                                         <label className={'d-flex flex-row justify-content-between align-items-center'} >
@@ -122,7 +135,7 @@ const Profile = () => {
                                                             </span>
                                                             <input type="text"
                                                                    onInput={e=>setFbLink(e.target.value)}
-                                                                   defaultValue={additional?.fb } className={'input'}/>
+                                                                   defaultValue={additional?.fb??'' } className={'input'}/>
                                                         </label>
                                                         <label className={'d-flex flex-row justify-content-between align-items-center'}>
                                                             <span>
@@ -130,7 +143,7 @@ const Profile = () => {
                                                             </span>
                                                             <input type="text"
                                                                    onInput={e=>setTwLink(e.target.value)}
-                                                                   defaultValue={additional?.tw} className={'input'}/>
+                                                                   defaultValue={additional?.tw??''} className={'input'}/>
                                                         </label>
                                                     </div>
                                             <div className={'d-flex justify-content-center align-items-center mt-2'}>
@@ -148,4 +161,4 @@ const Profile = () => {
             </>);
 };
 
-export default Profile;
+export default memo(Profile);

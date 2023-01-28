@@ -25,10 +25,18 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function (){
     Route::post('/logout',[App\API\Controllers\Auth\AuthController::class,'logout']);
     Route::post('/me',[App\API\Controllers\Auth\AuthController::class,'user']);
-    Route::get('/additional',[App\API\Controllers\Auth\AuthController::class,'additional']);
 
     Route::group(['prefix'=>'user'],function (){
-       Route::put('/profile',[\App\API\Controllers\UserController::class,'applyForChanges']);
+        Route::get('/additional',[App\API\Controllers\UserController::class,'additional']);
+        Route::put('/profile',[\App\API\Controllers\UserController::class,'applyForChanges']);
+        Route::get('/others',[\App\API\Controllers\UserController::class,'getOthers']);
+        Route::get('/other/{id}',[\App\API\Controllers\UserController::class,'getUserDetails']);
+    });
+
+    Route::group(['prefix'=>'requests'],function (){
+            Route::get('',[\App\API\Controllers\FriendController::class,'getFriendRequests']);
+            Route::post('/{id}',[\App\API\Controllers\FriendController::class,'sendFriendRequest']);
+            Route::delete('/{id}',[\App\API\Controllers\FriendController::class,'removeFromFriends']);
     });
 
     Route::group(['prefix'=>'post'],function (){

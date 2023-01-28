@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create(\App\Models\Permissions::TABLE, function (Blueprint $table) {
             $table->id();
+            $table->enum('allowed_for',[\App\Models\Admin::class,\App\Models\User::class]);
             $table->string('name');
         });
     }

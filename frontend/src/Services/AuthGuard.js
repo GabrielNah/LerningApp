@@ -8,23 +8,28 @@ const AuthGuard = () => {
     let [isAutheticated,setIsAutheticated]=useState(false);
     let [loaded,setLoaded]=useState(false);
     let {fetchUser}=useAuthContext();
-
-    useEffect(  ()=>{
-        const checkAuthentication=async ()=>{
-            if (getAuthToken()){
-                if (await fetchUser()){
-                    setIsAutheticated(true)
-                }else{
-                    setIsAutheticated(false)
-                }
+    const checkAuthentication=async ()=>{
+        if (getAuthToken()){
+            if (await fetchUser()){
+                return true;
+            }else{
+                return  false
             }
-            setLoaded(true)
         }
-        checkAuthentication()
-    },[])
-    if (!loaded){
-       return <Loader/>
     }
-    return isAutheticated? <Outlet/>: <Navigate to='login'/>
+    useEffect(  ()=>{
+
+        checkAuthentication().then(r=>{
+            if (r){
+                setIsAutheticated(true)
+            }else {
+                setIsAutheticated(false)
+            }
+        })
+         .catch(e=>setIsAutheticated(false))
+            .finally(()=>setLoaded(true))
+    },[])
+
+    return loaded ? isAutheticated? <Outlet/>: <Navigate to='login'/>:<Loader/>
 }
 export default AuthGuard
