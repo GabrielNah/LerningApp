@@ -11,6 +11,7 @@ class FriendRequestManager
 {
     public function sendFriendRequests(Authenticatable $user,int $friend_id)
     {
+        $user->sentFriendRequests()->where('to',$friend_id)->delete();
         return $user->sentFriendRequests()->create([
             'to'=>$friend_id,
             'state'=>Requests::SENT
@@ -35,9 +36,9 @@ class FriendRequestManager
         Friends::insert($data);
     }
 
-    public function rejectFriendRequests(Authenticatable $user,int $friend_id)
+    public function rejectFriendRequests(Authenticatable $user,int $id)
     {
-        $user->receivedFriendRequests()->firstWhere('from',$friend_id)->update(['state'=>Requests::REJECTED]);
+        $user->receivedFriendRequests()->firstWhere('id',$id)->update(['state'=>Requests::REJECTED]);
     }
 
     public function getFriends(Authenticatable $user)
@@ -59,6 +60,8 @@ class FriendRequestManager
     {
         $user->friends()->detach($friend_id);
         User::find($friend_id)->friends()->detach($user->id);
+        $user->sentFriendRequests()->where('to',$friend_id)->delete();
+        $user->receivedFriendRequests()->where('from',$friend_id)->delete();
     }
 
     public function getFriendRequestOfUser(Authenticatable $user)
@@ -66,5 +69,15 @@ class FriendRequestManager
         $sent=$user->load('sentFriendRequests.receiver:id,name')?->sentFriendRequests??[];
         $received=$user->load('receivedFriendRequests.sender:id,name')?->receivedFriendRequests??[];
         return [$sent,$received];
+    }
+
+    public function cancelSentRequest(Authenticatable $user,int $id)
+    {
+        $user->sentFriendRequests()->where('id',$id)->delete();
+    }
+
+    public function resendRequest(Authenticatable $user,int $id)
+    {
+        $user->sentFriendRequests()->where('id',$id)->update(['state'=>Requests::SENT]);
     }
 }

@@ -50,7 +50,7 @@ class UserController extends ApiController
     {
         $users=User::with('additional:id,user_id,avatar')->where('id','!=',auth()->id())->get(['id','name']);
         $friends=auth()->user()->friends()->pluck('friend_id');
-        $sentFriendRequestsTo=auth()->user()->sentFriendRequests()->pluck('id');
+        $sentFriendRequestsTo=auth()->user()->sentFriendRequests()->pluck('to')->unique()->values();
         return $this->successResponse(compact('users','friends','sentFriendRequestsTo'));
     }
 
