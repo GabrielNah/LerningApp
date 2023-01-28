@@ -38,4 +38,27 @@ class FriendController  extends ApiController
         [$sent,$received]=$this->friendManager->getFriendRequestOfUser(auth()->user());
         return $this->successResponse(['requests'=>[...$sent,...$received]]);
     }
+
+    public function rejectRequest(int $id)
+    {
+        $this->friendManager->rejectFriendRequests(auth()->user(),$id);
+        return $this->successResponse([]);
+    }
+
+    public function cancelSentRequest(int $id)
+    {
+        $this->friendManager->cancelSentRequest(auth()->user(),$id);
+        return $this->deletedResponse();
+    }
+
+    public function resendRequest(int $id)
+    {
+        $this->friendManager->resendRequest(auth()->user(),$id);
+        return $this->successResponse([]);
+    }
+
+    public function acceptRequest(int $friend_id)
+    {
+        $this->friendManager->acceptFriendRequest(auth()->user(),$friend_id);
+    }
 }

@@ -37,6 +37,10 @@ Route::middleware('auth:sanctum')->group(function (){
             Route::get('',[\App\API\Controllers\FriendController::class,'getFriendRequests']);
             Route::post('/{id}',[\App\API\Controllers\FriendController::class,'sendFriendRequest']);
             Route::delete('/{id}',[\App\API\Controllers\FriendController::class,'removeFromFriends']);
+            Route::put('/reject/{id}',[\App\API\Controllers\FriendController::class,'rejectRequest']);
+            Route::delete('/cancel/{id}',[\App\API\Controllers\FriendController::class,'cancelSentRequest']);
+            Route::patch('/resend/{id}',[\App\API\Controllers\FriendController::class,'resendRequest']);
+            Route::patch('/accept/{friend_id}',[\App\API\Controllers\FriendController::class,'acceptRequest']);
     });
 
     Route::group(['prefix'=>'post'],function (){
