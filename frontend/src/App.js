@@ -11,6 +11,10 @@ import {AuthProvider} from "./Contexts/Auth/AuthContext";
 import AuthGuard from "./Services/AuthGuard";
 import GuestGard from "./Services/GuestGard";
 import PostCreator from "./components/PostCreator";
+import SinglePost from "./components/SinglePost";
+import OtherUsers from "./components/OtherUsers";
+import OtherUser from "./components/OtherUser";
+import FriendRequests from "./components/FriendRequests";
 
 function App() {
   return (
@@ -30,6 +34,10 @@ function App() {
                 <Route path='profile' element={<Profile/>}/>
                 <Route path='dashboard' element={<Dashboard/>}/>
                 <Route path='posts' element={<PostCreator/>}/>
+                <Route path='users' element={<OtherUsers/>}/>
+                <Route path='requests' element={<FriendRequests/>}/>
+                <Route path='users/:id' element={<OtherUser/>}/>
+                <Route path='posts/:id' element={<SinglePost/>}/>
               </Route>
             </Route>
           </Route>

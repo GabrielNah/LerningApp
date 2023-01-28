@@ -55,7 +55,7 @@ const Dashboard = () => {
                         <div className="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                             <img src={'/assets/'+post.image} alt={post.title}
                                  className="img-fluid"/>
-                            <a href="#!">
+                            <a >
                                 <div className="mask"
                                      style={{backgroundColor: 'rgba(251, 251, 251, 0.15)'}}></div>
                             </a>
@@ -65,7 +65,7 @@ const Dashboard = () => {
                             <p className="card-text">
                                 {post.article}
                             </p>
-                            <a href="#!" className="btn btn-primary">Read</a>
+                            <NavLink  className="btn btn-primary" to={'/posts/'+post.id}>Read</NavLink>
                         </div>
                     </div>
                 </div>))

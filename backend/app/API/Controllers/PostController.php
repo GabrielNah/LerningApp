@@ -3,6 +3,7 @@
 namespace App\API\Controllers;
 
 use App\API\ApiController;
+use App\API\Requests\Posts\LeaveCommentRequest;
 use App\API\Requests\Posts\MakePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -31,8 +32,23 @@ class PostController  extends ApiController
 
     public function index()
     {
-        $posts=Post::query()->paginate(2);
+        $posts=Post::query()->paginate(6);
         return $this->successResponse(compact('posts'));
     }
 
+    public function getPost($id)
+    {
+        $post=Post::with('comments.writer')->find($id);
+        return $this->successResponse(compact('post'));
+    }
+
+    public function comment(LeaveCommentRequest $request,$id)
+    {
+        $post=Post::find($id);
+        $comment=$post->comments()->create([
+            'user_id'=>auth()->id(),
+            'comment'=>$request->comment,
+        ]);
+        return $this->createdResponse(compact('comment'));
+    }
 }
