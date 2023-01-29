@@ -21,7 +21,6 @@ function App() {
     <AuthProvider>
     <div className="App">
         <Routes>
-
           <Route path="/" element={<MainLayout/>}>
             <Route element={<GuestGard/>}>
               <Route path='' element={<HomeComponent/>} />
@@ -29,17 +28,17 @@ function App() {
               <Route path='/register' element={<RegisterComponent/>}/>
               <Route path='/forgot' element={<ForgotPassword/>}/>
             </Route>
-            <Route  element={<AuthGuard/>}>
-              <Route  element={<DashboardLayout/>}>
-                <Route path='profile' element={<Profile/>}/>
-                <Route path='dashboard' element={<Dashboard/>}/>
-                <Route path='posts' element={<PostCreator/>}/>
-                <Route path='users' element={<OtherUsers/>}/>
-                <Route path='requests' element={<FriendRequests/>}/>
-                <Route path='users/:id' element={<OtherUser/>}/>
-                <Route path='posts/:id' element={<SinglePost/>}/>
+              <Route  element={<AuthGuard/>}>
+                <Route  element={<DashboardLayout/>}>
+                  <Route path='profile' element={<Profile/>}/>
+                  <Route path='dashboard' element={<Dashboard/>}/>
+                  <Route path='posts' element={<PostCreator/>}/>
+                  <Route path='users' element={<OtherUsers/>}/>
+                  <Route path='requests' element={<FriendRequests/>}/>
+                  <Route path='users/:id' element={<OtherUser/>}/>
+                  <Route path='posts/:id' element={<SinglePost/>}/>
+                </Route>
               </Route>
-            </Route>
           </Route>
         </Routes>
       </div>

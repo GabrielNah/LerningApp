@@ -46,14 +46,14 @@ const OtherUsers = () => {
            <div className="card">
                 <div className="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                     <img src={user?.additional?.avatar ?  '/assets/'+ user?.additional?.avatar : '/Theme/user-default.png'}
-                         alt="ывлоарылвоар" className="img-fluid"/><a>
+                         alt="avatar" className="img-fluid"/><a>
                     <div className="mask"
                          style={{backgroundColor: 'rgba(251, 251, 251, 0.15)'}}></div>
                 </a></div>
                 <div className="card-body">
                     <h5 className="card-title">{user?.name}</h5>
                     {friends.includes(user.id) ?
-                        <NavLink className="btn btn-primary" to={'/users/'+user?.id}>View Profile</NavLink>
+                        <NavLink className="btn btn-success" to={'/users/'+user?.id}>View Profile</NavLink>
                         :sentFriendRequestsTo.includes(user?.id) ? <button className={'btn btn-secondary'}>Friend request is sent</button>
                             :<button onClick={()=>sendFriendRequest(user.id)} className={'btn btn-primary'}> Send Friend request </button>
                     }

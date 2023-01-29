@@ -2,10 +2,11 @@
 
 namespace App\API;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
-abstract class ApiController
+abstract class ApiController extends Controller
 {
     public function successResponse(array $data,int $statusCode=null):JsonResponse
     {

@@ -42,6 +42,7 @@ class UserController extends ApiController
 
     public function getUserDetails($id)
     {
+        $this->authorize('view-user-profile',$id);
         $user=User::with('additional')->find($id);
         return $this->successResponse(compact('user'));
     }

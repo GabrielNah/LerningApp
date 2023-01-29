@@ -30,6 +30,9 @@ const AuthGuard = () => {
             .finally(()=>setLoaded(true))
     },[])
 
-    return loaded ? isAutheticated? <Outlet/>: <Navigate to='login'/>:<Loader/>
+    return loaded ? isAutheticated?
+          <Outlet/>
+        : <Navigate to='login'/>
+        :<Loader/>
 }
 export default AuthGuard

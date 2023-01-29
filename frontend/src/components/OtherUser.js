@@ -13,12 +13,8 @@ const OtherUser = () => {
     const [loaded,setLoaded]=useState(false);
     const [user,setUser]=useState(null);
     const fetchUserProfile=async ()=>{
-        try{
             let {data:{user}}=await HttpService().get('/user/other/'+id);
             setUser(user)
-        }catch (e) {
-            console.log(e)
-        }
     }
     const removeFromFriends = async () => {
         try{
@@ -39,7 +35,8 @@ const OtherUser = () => {
     },[])
 
     return (<>
-            {!loaded ?
+            {
+                !loaded ?
                 user ? <Navigate to={'/dashboard'}/>:
                 <Loader/>:
                 (<div className="container d-flex justify-content-center align-items-center">
@@ -73,16 +70,16 @@ const OtherUser = () => {
                                                     <hr className="mt-0 mb-4"/>
                                                     <div className="d-flex flex-column justify-content-between gap-2">
                                                         { user?.additional?.ig && <label className={'d-flex flex-row justify-content-between align-items-center'}>
-                                                            <a className={'link-primary'} href={user?.additional?.ig??''}>Instagram</a>
+                                                            <a target='_blank' className={'link-primary'} href={user?.additional?.ig??''}>Instagram</a>
                                                         </label>}
                                                         {user?.additional?.fb && <label className={'d-flex flex-row justify-content-between align-items-center'} >
-                                                            <a href={user?.additional?.fb??'' } className={'link-primary'}>
+                                                            <a target='_blank' href={user?.additional?.fb??'' } className={'link-primary'}>
                                                                 Facebook
                                                             </a>
                                                         </label>}
                                                         {user?.additional?.tw &&
                                                             <label className={'d-flex flex-row justify-content-between align-items-center'}>
-                                                                <a href={user?.additional?.tw??''} className={'link-primary'}>
+                                                                <a target='_blank' href={user?.additional?.tw??''} className={'link-primary'}>
                                                                     Twitter
                                                                 </a>
                                                             </label>
