@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use App\Traits\HasAccessRelatedChecking;
-use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Admin extends Model
+
+class Admin extends Authenticatable
 {
-    use HasFactory,Authenticatable,HasApiTokens,HasAccessRelatedChecking;
+    use HasFactory,HasApiTokens,HasAccessRelatedChecking;
     const TABLE='admins';
     protected $guarded=[];
     protected $table=self::TABLE;

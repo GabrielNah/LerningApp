@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\Admin;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -33,6 +34,12 @@ class AuthServiceProvider extends ServiceProvider
                 return true;
             }
             return Response::deny('You are not authorize to view this page');
+        });
+        Gate::define('view-all-users',function (Authenticatable $user){
+            if ($user instanceof Admin){
+                return true;
+            }
+            return Response::deny('You are not authorize to gel all profiles  related data');
         });
     }
 }
