@@ -16,6 +16,13 @@ Route::post('login',[\App\Http\Controllers\Auth\AuthController::class,'login']);
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('logout',[\App\Http\Controllers\Auth\AuthController::class,'logout']);
     Route::post('me',[\App\Http\Controllers\Auth\AuthController::class,'user']);
+    Route::group(['prefix'=>'admin'],function (){
+        Route::get('users',[\App\Http\Controllers\Auth\AuthController::class,'getUsers']);
+
+        Route::group(['prefix'=>'users'],function (){
+              Route::get('{user}',[\App\Http\Controllers\UserProfileController::class,'getUserProfile']);
+        });
+    });
 });
 
 Route::get('/{any?}', function () {

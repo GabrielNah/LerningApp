@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginComponent from "../AdminTemplate/Auth/LoginComponent.vue";
-import {DASHBOARD_ROUTE, LOGIN_ROUTE} from "./routeNames";
+import {DASHBOARD_ROUTE, LOGIN_ROUTE, SINGLE_PROFILE} from "./routeNames";
 import DashboardLayout from "../AdminTemplate/Layout/DashboardLayout.vue";
 import Dashboard from "../AdminTemplate/Dashboard/Dashboard.vue";
 import AuthGuard from "./AuthGuard";
+import SingleProfile from "../AdminTemplate/Dashboard/SingleProfile.vue";
 // setup routes
 const router = createRouter({
     history: createWebHistory(),
@@ -28,6 +29,12 @@ const router = createRouter({
                     path: DASHBOARD_ROUTE.path,
                     name: DASHBOARD_ROUTE.name,
                     component: Dashboard,
+                    meta: {auth: true}
+                },
+                {
+                    path: SINGLE_PROFILE.path,
+                    name: SINGLE_PROFILE.name,
+                    component: SingleProfile,
                     meta: {auth: true}
                 }
             ]

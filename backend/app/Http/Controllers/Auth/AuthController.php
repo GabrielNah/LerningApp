@@ -6,6 +6,7 @@ use App\API\ApiController;
 use App\Http\Requests\LoginRequest;
 use App\Models\Admin;
 use App\Models\Permissions;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -54,6 +55,13 @@ class AuthController extends ApiController
         }catch (\Throwable $e){
             return $this->errorResponse([]);
         }
+    }
 
+
+    public function getUsers()
+    {
+        $this->authorize('view-all-users');
+        $users=User::withCount(['posts','friends'])->get();
+        return $this->successResponse(compact('users'));
     }
 }
